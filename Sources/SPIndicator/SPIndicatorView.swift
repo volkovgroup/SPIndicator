@@ -388,7 +388,7 @@ open class SPIndicatorView: UIView {
      */
     open var offset: CGFloat = 0
     
-    private var areaHeight: CGFloat = 50
+    private var areaHeight: CGFloat = 54
     private var minimumAreaWidth: CGFloat = 196
     private var maximumAreaWidth: CGFloat = 260
     private var titleAreaFactor: CGFloat = 2.5
