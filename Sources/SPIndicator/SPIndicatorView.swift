@@ -442,7 +442,7 @@ open class SPIndicatorView: UIView {
         
         let fitTitleToCompact: Bool = {
             guard let titleLabel = self.titleLabel else { return true }
-            titleLabel.numberOfLines = 1
+            titleLabel.numberOfLines = 2
             titleLabel.sizeToFit()
             return titleLabel.frame.width < titlesCompactWidth
         }()
