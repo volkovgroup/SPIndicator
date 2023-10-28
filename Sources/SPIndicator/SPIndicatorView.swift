@@ -136,7 +136,7 @@ open class SPIndicatorView: UIView {
     private func setTitle(_ text: String) {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .semibold, addPoints: 0)
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         let style = NSMutableParagraphStyle()
         style.lineBreakMode = .byTruncatingTail
         style.lineSpacing = 3
@@ -442,7 +442,7 @@ open class SPIndicatorView: UIView {
         
         let fitTitleToCompact: Bool = {
             guard let titleLabel = self.titleLabel else { return true }
-            titleLabel.numberOfLines = 2
+            titleLabel.numberOfLines = 1
             titleLabel.sizeToFit()
             return titleLabel.frame.width < titlesCompactWidth
         }()
