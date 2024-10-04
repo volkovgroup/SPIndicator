@@ -23,6 +23,62 @@ import UIKit
 
 #if os(iOS)
 
+enum Colors {
+    /// Figma: SecondaryBG
+    static var secondaryBackground: UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+                if traitCollection.userInterfaceStyle == .dark {
+                    return UIColor(hex: 0xF2F2F7)
+                } else {
+                    return UIColor(hex: 0x1C1C1E)
+                }
+            }
+        } else {
+            return UIColor(hex: 0x1C1C1E)
+        }
+    }
+    
+    /// A text label that contains secondary content.
+    /// Figma: Secondary
+    static var secondaryLabel: UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+                if traitCollection.userInterfaceStyle == .dark {
+                    return UIColor(hex: 0x3C3C43).withAlphaComponent(0.6)
+                } else {
+                    return UIColor(hex: 0x98A2AE)
+                }
+            }
+        } else {
+            return UIColor(hex: 0x98A2AE)
+        }
+    }
+}
+
+extension UIColor {
+    /// Creates a color object
+    /// - Parameters:
+    ///   - red: 0...255
+    ///   - green: 0...255
+    ///   - blue: 0...255
+    convenience init(red: Int, green: Int, blue: Int, alpha: CGFloat = 1) {
+        self.init(displayP3Red: CGFloat(red / 255), green: CGFloat(green / 255), blue: CGFloat(blue / 255), alpha: alpha)
+    }
+    
+    /// HEX init available init
+    /// - Parameters:
+    ///   - hex: HEX format (0x313131)
+    convenience init(hex: UInt) {
+        self.init(
+            red: CGFloat((hex & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((hex & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(hex & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+}
+
 /**
  SPIndicator: Main view. Can be customisable if need.
  
@@ -71,19 +127,15 @@ open class SPIndicatorView: UIView {
     open var titleLabel: UILabel?
     open var subtitleLabel: UILabel?
     open var iconView: UIView?
-    
-    private lazy var backgroundView: UIVisualEffectView = {
-        let view: UIVisualEffectView = {
-            if #available(iOS 13.0, *) {
-                return UIVisualEffectView(effect: UIBlurEffect(style: .systemThickMaterial))
-            } else {
-                return UIVisualEffectView(effect: UIBlurEffect(style: .light))
-            }
-        }()
+  
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = Colors.secondaryBackground
         view.isUserInteractionEnabled = false
         return view
     }()
-    
+        
     weak open var presentWindow: UIWindow?
     
     // MARK: - Init
@@ -144,7 +196,7 @@ open class SPIndicatorView: UIView {
             string: text, attributes: [.paragraphStyle: style]
         )
         label.textAlignment = .center
-        label.textColor = UIColor.Compability.label.withAlphaComponent(0.6)
+        label.textColor = Colors.secondaryLabel
         titleLabel = label
         addSubview(label)
     }
@@ -160,7 +212,7 @@ open class SPIndicatorView: UIView {
             string: text, attributes: [.paragraphStyle: style]
         )
         label.textAlignment = .center
-        label.textColor = UIColor.Compability.label.withAlphaComponent(0.3)
+        label.textColor = Colors.secondaryLabel
         subtitleLabel = label
         addSubview(label)
     }
@@ -225,6 +277,8 @@ open class SPIndicatorView: UIView {
         layoutSubviews()
         center.x = window.frame.midX
         toPresentPosition(.prepare(presentSide))
+        
+        self.backgroundColor = UIColor.white
         
         self.alpha = presentWithOpacity ? 0 : 1
         

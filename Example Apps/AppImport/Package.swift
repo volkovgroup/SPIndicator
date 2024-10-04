@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(name: "SparrowKit", url: "https://github.com/ivanvorobei/SparrowKit", .upToNextMajor(from: "3.5.1")),
         .package(name: "SPDiffable", url: "https://github.com/ivanvorobei/SPDiffable", .upToNextMajor(from: "4.0.1")),
-        .package(name: "SPIndicator", path: "SPIndicator")
+        .package(name: "SPIndicator", path: "../../SPIndicator")
     ],
     targets: [
         .target(
